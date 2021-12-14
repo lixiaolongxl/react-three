@@ -17,7 +17,12 @@ function Box(props) {
   const [hovered, hover] = useState(false)
   const [clicked, click] = useState(false)
   // Subscribe this component to the render-loop, rotate the mesh every frame
-  useFrame((state, delta) => (ref.current.rotation.x += 0.01))
+  useFrame((state, delta) => {
+    // console.log(state,delta);
+    
+    ref.current.rotation.x += 0.01
+    ref.current.rotation.y += 0.01
+  })
   // Return the view, these are regular Threejs elements expressed in JSX
   return (
     <mesh
@@ -34,35 +39,19 @@ function Box(props) {
 }
 
 ReactDOM.render(
-  <Canvas>
-  <ambientLight intensity={0.1}/>
-  <pointLight position={[10, 10, 10]} />
-  <directionalLight color="red" position={[0, 0, 5]} />
-  <Box position={[-1.2, 0, 0]} />
-
-
-  <mesh
-  onClick={(e) => {
-    e.stopPropagation();console.log('click',e);
-  }}
-  onContextMenu={(e) => console.log('context menu')}
-  onDoubleClick={(e) => console.log('double click')}
-  onWheel={(e) => console.log('wheel spins')}
-  onPointerUp={(e) => console.log('up')}
-  onPointerDown={(e) => console.log('down')}
-  onPointerOver={(e) => console.log('over')}
-  onPointerOut={(e) => console.log('out')}
-  onPointerEnter={(e) => console.log('enter')} // see note 1
-  onPointerLeave={(e) => console.log('leave')} // see note 1
-  onPointerMove={(e) => console.log('move')}
-  onPointerMissed={() => console.log('missed')}
-  onUpdate={(self) => console.log('props have been updated')}
-  visible userData={{ hello: 'world' }} position={[1, 2, 3]} rotation={[Math.PI / 2, 0, 0]}>
-    <sphereGeometry args={[1, 5, 6]} />
-    <meshStandardMaterial color="hotpink" transparent />
-  </mesh>
-  {/* <Box position={[1.2, 0, 0]} /> */}
-</Canvas>,
+  <div style={{width: '100%', height: '100vh'}}>
+    <Canvas style={{backgroundColor: 'black'}}>
+      <ambientLight intensity={0.1}/>
+      <pointLight position={[10, 10, 10]} />
+      <directionalLight color="red" position={[0, 0, 5]} />
+      <Box position={[-1.2, 0, 0]} />
+      <Box position={[1.2, 0, 0]} />
+      <mesh position={[0,0,0]}>
+        <boxGeometry/>
+        <meshBasicMaterial color="red"/>
+      </mesh>
+  </Canvas>
+  </div>,
   document.getElementById('root')
 );
 

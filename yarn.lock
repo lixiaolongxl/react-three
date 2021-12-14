@@ -1448,6 +1448,14 @@
     schema-utils "^2.6.5"
     source-map "^0.7.3"
 
+"@react-three/cannon@^4.2.0":
+  version "4.2.0"
+  resolved "https://registry.npmmirror.com/@react-three/cannon/download/@react-three/cannon-4.2.0.tgz#6508244d01adc3e0a84e30ce767f8a3a0446c1bf"
+  integrity sha512-k7+By1zdgv/tQGZFO9fkwQmfS71lqP1f8HGJbxWhs5d5p5t0RReH1bomFHwqXmpzHB2guHQ2DPvpeehNJtFkEQ==
+  dependencies:
+    cannon-es "^0.18.0"
+    cannon-es-debugger "^0.1.4"
+
 "@react-three/fiber@^7.0.21":
   version "7.0.21"
   resolved "https://registry.npmmirror.com/@react-three/fiber/download/@react-three/fiber-7.0.21.tgz#a34c3d85c8c1074e3bbc341640cf38567d2f791d"
@@ -3119,6 +3127,16 @@ caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001109, can
   version "1.0.30001191"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001191.tgz#bacb432b6701f690c8c5f7c680166b9a9f0843d9"
   integrity sha512-xJJqzyd+7GCJXkcoBiQ1GuxEiOBCLQ0aVW9HMekifZsAVGdj5eJ4mFB9fEhSHipq9IOk/QXFJUiIr9lZT+EsGw==
+
+cannon-es-debugger@^0.1.4:
+  version "0.1.4"
+  resolved "https://registry.npmmirror.com/cannon-es-debugger/download/cannon-es-debugger-0.1.4.tgz#22c79ae14c52de44465690988ff647c51c79c62b"
+  integrity sha1-Isea4UxS3kRGVpCYj/ZHxRx5xis=
+
+cannon-es@^0.18.0:
+  version "0.18.0"
+  resolved "https://registry.nlark.com/cannon-es/download/cannon-es-0.18.0.tgz#ae831ff9df2352d5faabb269c11ea0f10bc35c7e"
+  integrity sha1-roMf+d8jUtX6q7JpwR6g8QvDXH4=
 
 capture-exit@^2.0.0:
   version "2.0.0"
