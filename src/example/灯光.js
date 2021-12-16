@@ -27,6 +27,9 @@ function Box(props) {
   const [clicked, click] = useState(false)
   // Subscribe this component to the render-loop, rotate the mesh every frame
   useFrame((state, delta) => {
+    // console.log(ref.current);
+    
+    ref.current.rotation.x += 0.01
     ref.current.rotation.y += 0.01
   })
   // Return the view, these are regular Threejs elements expressed in JSX
@@ -59,9 +62,6 @@ const Lamp = (props)=>{
   return (
     <mesh {...props}>
       <pointLight  castShadow/>
-
-      {/* 平型光 */}
-      {/* <directionalLight castShadow color="red" /> */}
       <sphereGeometry  args={[0.2,20,20]}/>
       <meshPhongMaterial emissive='yellow' side={THREE.DoubleSide}/>
     </mesh>
@@ -76,11 +76,11 @@ ReactDOM.render(
       <Orbit/>
       <ambientLight intensity={0.2}/>
       
-      
+      <directionalLight color="red" position={[0, 0, 5]} />
       
       <axesHelper args={[5]}/>
       {/*  */}
-      <Box position={[0, 1, 0]} />
+      <Box position={[-1.2, 1, 0]} />
       {/* 地面 */}
       <Floor position={[0,-1,0]}/>
       {/* 灯 */}
