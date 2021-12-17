@@ -42,22 +42,21 @@ function Box(props) {
       onPointerOut={(event) => hover(false)}>
       <boxGeometry args={[2, 2, 2]} />
       {/* <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} /> */}
-      
+      {/* 金属材质 */}
       {/* meshStandardMaterial */}
       {/* meshPhysicalMaterial  */}
-      {/* 金属材质 */}
-      <meshStandardMaterial  
-        color="blue" 
+      <meshPhysicalMaterial  
+        color="white" 
         transparent
-        // opacity={0.5}
+        opacity={0.5}
         fog={false}
         // wireframe
-        metalness={1} //材料的金属性对光的一面才显示颜色
-        // side={THREE.DoubleSide}
+        // metalness={1} //材料的金属性对光的一面才显示颜色
+        side={THREE.DoubleSide}
         reflectivity={1} //反射率
-        roughness={0.5}  //材质的粗糙程度。0.0表示平滑的镜面反射，1.0表示完全漫反射。默认值为1.0。如果还提供
-        // clearcoat={1} //玻璃材质
-        // transmission={0.7} //透射度（或光学透明度），0.0至1.0。默认为0.0。即使它们完全透射，薄，透明或半透明，塑料或玻璃材料也很大程度上是反射的。传动特性可用于模拟这些材料。当传输非零时，不透明度应设置为1。
+        roughness={0}  //材质的粗糙程度。0.0表示平滑的镜面反射，1.0表示完全漫反射。默认值为1.0。如果还提供
+        clearcoat={1} //玻璃材质
+        transmission={0.7} //透射度（或光学透明度），0.0至1.0。默认为0.0。即使它们完全透射，薄，透明或半透明，塑料或玻璃材料也很大程度上是反射的。传动特性可用于模拟这些材料。当传输非零时，不透明度应设置为1。
       />
     </mesh>
   )
