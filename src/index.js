@@ -26,7 +26,6 @@ function Box(props) {
   const texture = useLoader(
     THREE.TextureLoader,
     '/wood.jpeg');
-  
   useFrame((state, delta) => {
     ref.current.rotation.y += 0.01
     ref.current.rotation.x += 0.01
@@ -34,7 +33,9 @@ function Box(props) {
   return (
     <mesh
       castShadow
-      // receiveShadow
+      onClick={(e) => {
+        window.activeMesh = e.object;
+      }}
       {...props}
       ref={ref}>
       <sphereGeometry args={[1, 100, 100]} />
@@ -74,13 +75,13 @@ const BackGround = (props)=>{
   const formatted = new THREE.WebGLCubeRenderTarget(
     texture.image.height
     ).fromEquirectangularTexture(gl,texture)
-    console.log(formatted)
   return (
     <primitive attach="background" object={texture}/>
   )
 }
 ReactDOM.render(
   <div style={{width: '100%', height: '100vh'}}>
+    
     <Canvas 
       shadows  
       style={{backgroundColor: 'black'}} 
@@ -90,7 +91,10 @@ ReactDOM.render(
       <axesHelper args={[5]}/>
       {/*  */}
       <Suspense fallback={null}>
-        <Box position={[0, 1, 0]} />
+        <Box position={[-4, 1, 0]} />
+      </Suspense>
+      <Suspense fallback={null}>
+        <Box position={[4, 1, 0]} />
       </Suspense>
       {/*  */}
       <Suspense fallback={null}>
