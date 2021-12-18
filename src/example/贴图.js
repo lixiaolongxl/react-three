@@ -76,7 +76,7 @@ const BackGround = (props)=>{
     ).fromEquirectangularTexture(gl,texture)
     console.log(formatted)
   return (
-    <primitive attach="background" object={texture}/>
+    <primitive attach="background" object={formatted}/>
   )
 }
 ReactDOM.render(
