@@ -44,7 +44,6 @@ function Box(props) {
       <sphereGeometry args={[1, 100, 100]} />
      
       <meshPhysicalMaterial  
-        // color="yellow"
         map={texture}
       />
     </mesh>
