@@ -4,7 +4,7 @@ import React, { useRef, useState ,useEffect} from 'react'
 import { Canvas, useFrame,useThree,extend } from '@react-three/fiber'
 import './index.css';
 import * as THREE from 'three'
-import reportWebVitals from './reportWebVitals';
+import reportWebVitals from '../reportWebVitals';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 extend({OrbitControls})
 

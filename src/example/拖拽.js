@@ -7,8 +7,6 @@ import * as THREE from 'three'
 import reportWebVitals from './reportWebVitals';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 import {DragControls} from 'three/examples/jsm/controls/DragControls'
-
-import { Physics,useBox } from '@react-three/cannon'
 extend({OrbitControls})
 extend({DragControls})
 // 控制
@@ -25,25 +23,30 @@ function Box(props) {
   //   console.log(gl,camera,scene);
     
   // },[])
-  
-  const [ref, api] = useBox(() => ({ ...props,mass: 1 }))
-  // const ref = useRef()
+  const ref = useRef()
   
   const texture = useLoader(
     THREE.TextureLoader,
     '/wood.jpeg');
-  
+  useFrame((state, delta) => {
+    ref.current.rotation.y += 0.01
+    ref.current.rotation.x += 0.01
+  })
   return (
     <mesh
       castShadow
       onClick={(e) => {
+        
         window.activeMesh = e.object;
+        // console.log(e.object);
+        
       }}
       {...props}
-      api={api}
       ref={ref}>
       <sphereGeometry args={[1, 100, 100]} />
+     
       <meshPhysicalMaterial  
+        // color="yellow"
         map={texture}
       />
     </mesh>
@@ -51,9 +54,8 @@ function Box(props) {
 }
 //地面
 const Floor = (props)=>{
-  const [ref, api] = useBox(() => ({args:[20, 0.1, 20] ,...props}))
   return (
-    <mesh ref={ref} {...props} receiveShadow >
+    <mesh {...props} receiveShadow >
       <boxGeometry  args={[20, 0.1, 20]} />
       <meshPhongMaterial side={THREE.DoubleSide}/>
     </mesh>
@@ -92,6 +94,8 @@ const Dragable = (props)=>{
   const controlsRef = useRef()
   useEffect(()=>{
     setChildren(groupRef.current.children)
+
+    
   },[])
   useEffect(()=>{
     controlsRef.current.addEventListener('hoveron',e=>{
@@ -99,16 +103,6 @@ const Dragable = (props)=>{
     })
     controlsRef.current.addEventListener('hoveroff',e=>{
       scene.orbitControls.enabled = true;
-    })
-    controlsRef.current.addEventListener('dragstart',e=>{
-      e.object.api.mass.set(0); //表示受重力影响
-    })
-    controlsRef.current.addEventListener('dragend',e=>{
-      e.object.api.mass.set(1); //表示不受重力影响
-    })
-    controlsRef.current.addEventListener('drag',e=>{
-      e.object.api.position.copy(e.object.position)
-      e.object.api.velocity.set(0,0,0);
     })
     // dragend dragend
   },[children])
@@ -137,28 +131,23 @@ ReactDOM.render(
       <ambientLight intensity={0.2}/>
       <axesHelper args={[5]}/>
       {/*  */}
-      <Physics>
-        <Dragable>
-          <Suspense fallback={null}>
-            <Box position={[-4, 1, 0]} />
-          </Suspense>
-          <Suspense fallback={null}>
-            <Box position={[4, 1, 0]} />
-          </Suspense>
-          
-        </Dragable>
-        {/*  */}
+      <Dragable>
         <Suspense fallback={null}>
-          <BackGround  />
+          <Box position={[-4, 1, 0]} />
         </Suspense>
-        {/* 地面 */}
-        <Floor position={[0,-1,0]}/>
-      </Physics>
-      
+        <Suspense fallback={null}>
+          <Box position={[4, 1, 0]} />
+        </Suspense>
+        
+      </Dragable>
       {/* 灯 */}
       <Lamp position={[0, 5, 0]}/>
-      
-      
+      {/*  */}
+      <Suspense fallback={null}>
+        <BackGround  />
+      </Suspense>
+      {/* 地面 */}
+      <Floor position={[0,-1,0]}/>
       
   </Canvas>
   </div>,
