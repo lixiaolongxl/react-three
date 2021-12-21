@@ -7,7 +7,7 @@ import * as THREE from 'three'
 import reportWebVitals from './reportWebVitals';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 import {DragControls} from 'three/examples/jsm/controls/DragControls'
-
+import Model from './components/Model'
 import { Physics,useBox } from '@react-three/cannon'
 extend({OrbitControls})
 extend({DragControls})
@@ -73,15 +73,15 @@ const Lamp = (props)=>{
   )
 }
 //背景
-const BackGround = (props)=>{
+const Background = (props)=>{
   const {gl} = useThree()
-  const texture = useLoader( THREE.TextureLoader,'/sky.jpeg');
+  const texture = useLoader( THREE.TextureLoader,'/sky1.jpeg');
   const formatted = new THREE.WebGLCubeRenderTarget(
     texture.image.height
     ).fromEquirectangularTexture(gl,texture)
     // formatted 可以使用useMemo
   return (
-    <primitive attach="background" object={texture}/>
+    <primitive attach="background" object={formatted}/>
   )
 }
 //拖拽
@@ -140,16 +140,21 @@ ReactDOM.render(
       <Physics>
         <Dragable>
           <Suspense fallback={null}>
-            <Box position={[-4, 1, 0]} />
+            <Model 
+            scale={new Array(3).fill(0.01)}
+            position={[4,-0.5,0]}
+            path={'./tesla_model_3/scene.gltf'}/>
           </Suspense>
           <Suspense fallback={null}>
-            <Box position={[4, 1, 0]} />
+            <Model 
+            scale={new Array(3).fill(0.01)}
+            position={[-4,-0.8,0]}
+            path={'./tesla_model_s/scene.gltf'}/>
           </Suspense>
-          
         </Dragable>
         {/*  */}
         <Suspense fallback={null}>
-          <BackGround  />
+          <Background  />
         </Suspense>
         {/* 地面 */}
         <Floor position={[0,-1,0]}/>
