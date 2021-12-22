@@ -8,6 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 import {DragControls} from 'three/examples/jsm/controls/DragControls'
 import Model from './components/Model'
+import BoundingBox from './components/BoundingBox'
 import { Physics,useBox } from '@react-three/cannon'
 extend({OrbitControls})
 extend({DragControls})
@@ -76,12 +77,16 @@ const Lamp = (props)=>{
 const Background = (props)=>{
   const {gl} = useThree()
   const texture = useLoader( THREE.TextureLoader,'/sky1.jpeg');
+  // console.log(texture.image.height);
+  
   const formatted = new THREE.WebGLCubeRenderTarget(
     texture.image.height
     ).fromEquirectangularTexture(gl,texture)
     // formatted 可以使用useMemo
+    // console.log(formatted);
+    
   return (
-    <primitive attach="background" object={formatted}/>
+    <primitive attach="background" object={formatted}  />
   )
 }
 //拖拽
@@ -101,20 +106,22 @@ const Dragable = (props)=>{
       scene.orbitControls.enabled = true;
     })
     controlsRef.current.addEventListener('dragstart',e=>{
-      e.object.api.mass.set(0); //表示受重力影响
+      e.object.api?.mass.set(0); //表示受重力影响
     })
     controlsRef.current.addEventListener('dragend',e=>{
-      e.object.api.mass.set(1); //表示不受重力影响
+      e.object.api?.mass.set(1); //表示不受重力影响
     })
     controlsRef.current.addEventListener('drag',e=>{
-      e.object.api.position.copy(e.object.position)
-      e.object.api.velocity.set(0,0,0);
+      e.object.api?.position.copy(e.object.position)
+      e.object.api?.velocity.set(0,0,0);
     })
     // dragend dragend
   },[children])
   return (
     <group ref={groupRef}>
-      <dragControls ref={controlsRef} args={[children,camera,gl.domElement]}/>
+      <dragControls
+      transformGroup={props.transformGroup}
+       ref={controlsRef} args={[children,camera,gl.domElement]}/>
       {props.children}
     </group>
   )
@@ -138,20 +145,34 @@ ReactDOM.render(
       <axesHelper args={[5]}/>
       {/*  */}
       <Physics>
-        <Dragable>
-          <Suspense fallback={null}>
-            <Model 
-            scale={new Array(3).fill(0.01)}
-            position={[4,-0.5,0]}
-            path={'./tesla_model_3/scene.gltf'}/>
-          </Suspense>
-          <Suspense fallback={null}>
-            <Model 
-            scale={new Array(3).fill(0.01)}
-            position={[-4,-0.8,0]}
-            path={'./tesla_model_s/scene.gltf'}/>
-          </Suspense>
-        </Dragable>
+        <Suspense fallback={null}>
+          <Dragable transformGroup>
+            <BoundingBox 
+              visible 
+              dims={[3,2,6]}
+              offset={[0,0,0.8]}
+              position={[4,0,0]}>
+              <Model 
+                scale={new Array(3).fill(0.01)}
+                // position={[4,-0.5,0]}
+                path={'./tesla_model_3/scene.gltf'}/>
+            </BoundingBox>
+            
+          </Dragable>
+          <Dragable transformGroup>
+            <BoundingBox 
+              visible 
+              dims={[3,2,7]}
+              offset={[0,0,0.1]}
+              position={[-4,0,0]}>
+              <Model 
+                scale={new Array(3).fill(0.01)}
+                // position={[-4,-0.8,0]}
+                path={'./tesla_model_s/scene.gltf'}/>
+            </BoundingBox>
+            
+          </Dragable>
+        </Suspense>
         {/*  */}
         <Suspense fallback={null}>
           <Background  />
