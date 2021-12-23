@@ -1,14 +1,14 @@
 // import React from 'react';
 import ReactDOM from 'react-dom';
-import React, { Suspense} from 'react'
-import { Canvas,useThree,extend,useLoader } from '@react-three/fiber'
+import React, { useRef, useState ,useEffect,Suspense} from 'react'
+import { Canvas, useFrame,useThree,extend,useLoader } from '@react-three/fiber'
 import './index.css';
 import * as THREE from 'three'
 import reportWebVitals from './reportWebVitals';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 import {DragControls} from 'three/examples/jsm/controls/DragControls'
-import Cars from './components/Cars'
-import CameraControls from './components/CameraControls'
+import Model from './components/Model'
+import BoundingBox from './components/BoundingBox'
 import { Physics,useBox } from '@react-three/cannon'
 extend({OrbitControls})
 extend({DragControls})
@@ -89,7 +89,43 @@ const Background = (props)=>{
     <primitive attach="background" object={formatted}  />
   )
 }
-
+//拖拽
+const Dragable = (props)=>{
+  const {gl,camera,scene} = useThree()
+  const [children,setChildren] = useState([])
+  const groupRef = useRef()
+  const controlsRef = useRef()
+  useEffect(()=>{
+    setChildren(groupRef.current.children)
+  },[])
+  useEffect(()=>{
+    controlsRef.current.addEventListener('hoveron',e=>{
+      scene.orbitControls.enabled = false;
+    })
+    controlsRef.current.addEventListener('hoveroff',e=>{
+      scene.orbitControls.enabled = true;
+    })
+    controlsRef.current.addEventListener('dragstart',e=>{
+      e.object.api?.mass.set(0); //表示受重力影响
+    })
+    controlsRef.current.addEventListener('dragend',e=>{
+      e.object.api?.mass.set(1); //表示不受重力影响
+    })
+    controlsRef.current.addEventListener('drag',e=>{
+      e.object.api?.position.copy(e.object.position)
+      e.object.api?.velocity.set(0,0,0);
+    })
+    // dragend dragend
+  },[children])
+  return (
+    <group ref={groupRef}>
+      <dragControls
+      transformGroup={props.transformGroup}
+       ref={controlsRef} args={[children,camera,gl.domElement]}/>
+      {props.children}
+    </group>
+  )
+}
 const hadleClick = e =>{
   window.activeMesh.material.color = new THREE.Color(e.target.style.background);
 }
@@ -104,13 +140,39 @@ ReactDOM.render(
       shadows  
       style={{backgroundColor: 'black'}} 
       camera={{position:[8,8,8]}}>
-        <CameraControls/>
       <Orbit/>
       <ambientLight intensity={0.2}/>
       <axesHelper args={[5]}/>
       {/*  */}
       <Physics>
-        <Cars/>
+        <Suspense fallback={null}>
+          <Dragable transformGroup>
+            <BoundingBox 
+              // visible 
+              dims={[3,2,6]}
+              offset={[0,-0.4,0.8]}
+              position={[4,0,0]}>
+              <Model 
+                scale={new Array(3).fill(0.01)}
+                // position={[4,-0.5,0]}
+                path={'./tesla_model_3/scene.gltf'}/>
+            </BoundingBox>
+            
+          </Dragable>
+          <Dragable transformGroup>
+            <BoundingBox 
+              // visible 
+              dims={[3,2,7]}
+              offset={[0,-0.8,0.1]}
+              position={[-4,0,0]}>
+              <Model 
+                scale={new Array(3).fill(0.01)}
+                // position={[-4,-0.8,0]}
+                path={'./tesla_model_s/scene.gltf'}/>
+            </BoundingBox>
+            
+          </Dragable>
+        </Suspense>
         {/*  */}
         <Suspense fallback={null}>
           <Background  />
