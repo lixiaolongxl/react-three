@@ -9,6 +9,7 @@ import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls.js'
 import {DragControls} from 'three/examples/jsm/controls/DragControls'
 import Cars from './components/Cars'
 import CameraControls from './components/CameraControls'
+import Buttons  from './components/Buttons'
 import { Physics,useBox } from '@react-three/cannon'
 extend({OrbitControls})
 extend({DragControls})
@@ -100,6 +101,7 @@ ReactDOM.render(
       <div onClick={hadleClick} style={{background:'green',left:'160px'}}>green</div>
       <div onClick={hadleClick} style={{background:'yellow',left:'220px'}}>yellow</div>
     </div>
+    <Buttons></Buttons>
     <Canvas 
       shadows  
       style={{backgroundColor: 'black'}} 
@@ -108,19 +110,22 @@ ReactDOM.render(
       <Orbit/>
       <ambientLight intensity={0.2}/>
       <axesHelper args={[5]}/>
+      <Suspense fallback={null}>
+          <Background  />
+        </Suspense>
       {/*  */}
       <Physics>
         <Cars/>
         {/*  */}
-        <Suspense fallback={null}>
-          <Background  />
-        </Suspense>
+        
         {/* 地面 */}
         <Floor position={[0,-1,0]}/>
       </Physics>
       
       {/* 灯 */}
-      <Lamp position={[0, 5, 0]}/>
+      <Lamp position={[0, 3, 0]}/>
+      <Lamp position={[6, 3, 0]}/>
+      <Lamp position={[-6, 3, 0]}/>
       
       
       

@@ -11,7 +11,7 @@ const CameraControls = ({})=>{
             scene.orbitControls.update();
 
             let diff = camera.position.clone().sub(state.cameraPos).length()
-            console.log(diff);
+            // console.log(diff);
             
             if(diff<0.1){
                 state.shouldUpdate = false;
