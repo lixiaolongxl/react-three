@@ -97,9 +97,9 @@ const hadleClick = e =>{
 ReactDOM.render(
   <div style={{width: '100%', height: '100vh'}}>
     <div className="text">
-      <div onClick={hadleClick} style={{background:'red',left:'100px'}}>red</div>
-      <div onClick={hadleClick} style={{background:'green',left:'160px'}}>green</div>
-      <div onClick={hadleClick} style={{background:'yellow',left:'220px'}}>yellow</div>
+      <div onClick={hadleClick} style={{background:'red',left:'100px'}}></div>
+      <div onClick={hadleClick} style={{background:'green',left:'160px'}}></div>
+      <div onClick={hadleClick} style={{background:'blue',left:'220px'}}></div>
     </div>
     <Buttons></Buttons>
     <Canvas 
