@@ -22,6 +22,7 @@ const Dragable = (props)=>{
       })
       controlsRef.current.addEventListener('dragstart',e=>{
         e.object.api?.mass.set(0); //表示受重力影响
+        // console.log(e.object)
       })
       controlsRef.current.addEventListener('dragend',e=>{
         e.object.api?.mass.set(1); //表示不受重力影响

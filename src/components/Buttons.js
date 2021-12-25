@@ -11,17 +11,20 @@ const Buttons = ({})=>{
     const sets = {
         1:{
             cameraPos:[9,2,4],
-            target:[4,0,0]
+            target:[4,0,0],
+            name:'Capot001_CAR_PAINT_0'
         },
         2:{
             cameraPos:[1,2,5],
-            target:[-4,0,0]
+            target:[-4,0,0],
+            name:'object005_bod_0'
         }
     }
     const handleClick=(num)=>{
         // console.log(num);
         state.cameraPos.set(...sets[num].cameraPos);
         state.target.set(...sets[num].target);
+        state.activeMeshName = sets[num].name;
         state.shouldUpdate = true;
     }
     return (

@@ -10,7 +10,6 @@ import {DragControls} from 'three/examples/jsm/controls/DragControls'
 import Cars from './components/Cars'
 import CameraControls from './components/CameraControls'
 import Buttons  from './components/Buttons'
-import Lights from './components/Lights'
 import { Physics,useBox } from '@react-three/cannon'
 import state from './state'
 extend({OrbitControls})
@@ -55,15 +54,27 @@ function Box(props) {
 }
 //地面
 const Floor = (props)=>{
-  const [ref, api] = useBox(() => ({args:[200, 0.1, 200] ,...props}))
+  const [ref, api] = useBox(() => ({args:[20, 0.1, 20] ,...props}))
   return (
     <mesh ref={ref} {...props} receiveShadow >
-      <boxGeometry  args={[200, 0.1, 200]} />
+      <boxGeometry  args={[20, 0.1, 20]} />
       <meshPhongMaterial side={THREE.DoubleSide}/>
     </mesh>
   )
 }
+//灯
+const Lamp = (props)=>{
+  return (
+    <mesh {...props}>
+      <pointLight  castShadow/>
 
+      {/* 平型光 */}
+      {/* <directionalLight castShadow color="red" /> */}
+      <sphereGeometry  args={[0.2,20,20]}/>
+      <meshPhongMaterial emissive='yellow' side={THREE.DoubleSide}/>
+    </mesh>
+  )
+}
 //背景
 const Background = (props)=>{
   const {gl} = useThree()
@@ -97,19 +108,24 @@ ReactDOM.render(
       style={{backgroundColor: 'black'}} 
       camera={{position:[8,8,8]}}>
         <CameraControls/>
-        <Orbit/>
-        <Lights/>
-        <axesHelper args={[5]}/>
-        {/* 背景 */}
-        <Suspense fallback={null}>
-          <Background  />
-        </Suspense>
-        <Physics>
-          <Cars/>
-          {/* 地面 */}
-          <Floor position={[0,-1,0]}/>
-        </Physics>
-      </Canvas>
+      <Orbit/>
+      <ambientLight intensity={0.2}/>
+      <axesHelper args={[5]}/>
+      {/* 背景 */}
+      <Suspense fallback={null}>
+        <Background  />
+      </Suspense>
+      {/*  */}
+      <Physics>
+        <Cars/>
+        {/* 地面 */}
+        <Floor position={[0,-1,0]}/>
+      </Physics>
+      {/* 灯 */}
+      <Lamp position={[0, 3, 0]}/>
+      <Lamp position={[6, 3, 0]}/>
+      <Lamp position={[-6, 3, 0]}/>
+  </Canvas>
   </div>,
   document.getElementById('root')
 );
