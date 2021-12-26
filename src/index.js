@@ -13,6 +13,7 @@ import Buttons  from './components/Buttons'
 import Lights from './components/Lights'
 import { Physics,useBox } from '@react-three/cannon'
 import state from './state'
+import { EffectComposer, DepthOfField} from '@react-three/postprocessing'
 extend({OrbitControls})
 extend({DragControls})
 // 控制
@@ -90,6 +91,9 @@ ReactDOM.render(
       <div onClick={hadleClick} style={{background:'red',left:'100px'}}></div>
       <div onClick={hadleClick} style={{background:'green',left:'160px'}}></div>
       <div onClick={hadleClick} style={{background:'blue',left:'220px'}}></div>
+      <div onClick={hadleClick} style={{background:'orange',left:'280px'}}></div>
+      <div onClick={hadleClick} style={{background:'black',left:'340px'}}></div>
+      <div onClick={hadleClick} style={{background:'white',left:'400px'}}></div>
     </div>
     <Buttons></Buttons>
     <Canvas 
@@ -97,6 +101,12 @@ ReactDOM.render(
       style={{backgroundColor: 'black'}} 
       camera={{position:[8,8,8]}}>
         <CameraControls/>
+        {/* 添加远处模糊特效 */}
+        <EffectComposer>
+          <DepthOfField 
+            focusDistance={4} focalLength={0.01} bokehScale={0} height={480}
+          />
+        </EffectComposer>
         <Orbit/>
         <Lights/>
         <axesHelper args={[5]}/>

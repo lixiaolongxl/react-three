@@ -50,7 +50,7 @@ const Dragable = (props)=>{
               // visible 
               dims={[3,2,6]}
               offset={[0,-0.4,0.8]}
-              position={[4,0,0]}>
+              position={[4,5,0]}>
               <Model 
                 scale={new Array(3).fill(0.01)}
                 // position={[4,-0.5,0]}
@@ -63,7 +63,7 @@ const Dragable = (props)=>{
               // visible 
               dims={[3,2,7]}
               offset={[0,-0.8,0.1]}
-              position={[-4,0,0]}>
+              position={[-4,5,0]}>
               <Model 
                 scale={new Array(3).fill(0.01)}
                 // position={[-4,-0.8,0]}
