@@ -13,7 +13,7 @@ import Buttons  from './components/Buttons'
 import Lights from './components/Lights'
 import { Physics,useBox } from '@react-three/cannon'
 import state from './state'
-
+import Effects from './components/Effects'
 extend({OrbitControls})
 extend({DragControls})
 // 控制
@@ -99,10 +99,15 @@ ReactDOM.render(
     <Canvas 
       shadows  
       style={{backgroundColor: 'black'}} 
-      
+      gl={{
+        powerPreference: "high-performance",
+        antialias: false,
+        stencil: false,
+        depth: false
+      }}
       camera={{position:[8,8,8]}}>
         <CameraControls/>
-       
+        <Effects/>
         <Orbit/>
         <Lights/>
         <axesHelper args={[5]}/>

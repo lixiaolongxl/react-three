@@ -13,7 +13,7 @@ import Buttons  from './components/Buttons'
 import Lights from './components/Lights'
 import { Physics,useBox } from '@react-three/cannon'
 import state from './state'
-
+import { EffectComposer, DepthOfField} from '@react-three/postprocessing'
 extend({OrbitControls})
 extend({DragControls})
 // 控制
@@ -99,10 +99,20 @@ ReactDOM.render(
     <Canvas 
       shadows  
       style={{backgroundColor: 'black'}} 
-      
+      gl={{
+        powerPreference: "high-performance",
+        antialias: false,
+        stencil: false,
+        depth: false
+      }}
       camera={{position:[8,8,8]}}>
         <CameraControls/>
-       
+        {/* 添加远处模糊特效 */}
+        <EffectComposer>
+          <DepthOfField 
+            focusDistance={4} focalLength={0.01} bokehScale={2} height={480}
+          />
+        </EffectComposer>
         <Orbit/>
         <Lights/>
         <axesHelper args={[5]}/>
