@@ -3,7 +3,14 @@ import { GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 import * as THREE from 'three'
 const Model = props=>{
     const model = useLoader(GLTFLoader,props.path)
-    // console.log(model.scene)
+
+
+
+    console.log(props.path,model)
+
+    if(model.animations.length>0){
+        
+    }
     model.scene.traverse(child=>{
         if(child.isMesh){
             child.castShadow= true;

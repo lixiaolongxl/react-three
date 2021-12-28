@@ -71,6 +71,20 @@ const Dragable = (props)=>{
             </BoundingBox>
             
           </Dragable>
+          <Dragable transformGroup>
+            <BoundingBox
+             dims={[3,2,7]}
+             offset={[0,-0.8,0.1]}
+             position={[0,0,0]}
+            >
+              <Model 
+                scale={new Array(3).fill(1)}
+                // position={[0,0,0]}
+                path={'./robot_dog__4kriggedasset/scene.gltf'}/>
+            </BoundingBox>
+              
+          </Dragable>
+              
         </Suspense>
     )
  }
