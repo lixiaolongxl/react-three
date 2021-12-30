@@ -3,7 +3,7 @@ import { GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader'
 import * as THREE from 'three'
 const Model = props=>{
     const model = useLoader(GLTFLoader,props.path)
-
+    
     if(model.animations.length>0){
         console.log(props.path,model)
     }
