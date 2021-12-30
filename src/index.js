@@ -16,9 +16,11 @@ import state from './state'
 
 extend({OrbitControls})
 extend({DragControls})
+ // console.log(process.env)
 // 控制
 const Orbit = ()=>{
   const {camera,gl} = useThree()
+ 
   return (
     <orbitControls attach='orbitControls' args={[camera,gl.domElement]}/>
   )
